@@ -3,8 +3,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Welcome to CodeIgniter 4!</title>
-	<meta name="description" content="The small framework with powerful features">
+	<title>BPFipe</title>
+	<!-- <meta name="description" content="The small framework with powerful features"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" type="image/png" href="/favicon.ico" />
 	<!-- Compiled and minified CSS -->
@@ -108,6 +108,34 @@
 			color: #fff;
 			transition: right 0.2s ease-in-out, color 1s;
 		}
+		.overlay {
+			z-index: 9999999;
+			display: none;
+			opacity: 0;
+			width: auto;
+			max-width: 0px;
+			height: auto;
+			max-height: 0px;
+			transition: all 0.2s ease-out;
+		}
+		.overlay.show {
+			display: block;
+			opacity: 1;
+			transition: opacity 0.5s ease-in;
+			color: #fff;
+			position: absolute;
+			width: 100vw;
+			height: 100vh;
+			max-width: 100vw;
+			max-height: 100vh;
+			top: 0;
+			left: 0;
+			background-color: rgba(0, 0, 0, 0.6);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
 	</style>
 </head>
 
@@ -143,16 +171,20 @@
 	</div> */ ?>
 
 	</header>
-
+	
 	<!-- CONTENT -->
-
+	<div class="overlay">
+	<img height="44" title="Logo" alt="" src="<?=base_url("assets/img/loading.gif")?>">
+		<h6>Agurade...</h6>
+	</div>
 	<section>
 		<div class="container">
 			<div class="row">
 				<div class="lp-side col s3">
-				<img height="44" title="CodeIgniter Logo" alt="Visit CodeIgniter.com official website!" src="http://192.168.10.214/brasilatuarial/new/assets/img/logo/logo.png">
+				<img height="44" title="Logo" alt="" src="<?=base_url("assets/img/logo.png")?>">
 				</div>
 				<div class="lp-form col s9">
+					
 					<div class="form-box">
 						<div class="row center-align">
 							<?php /*
@@ -343,6 +375,7 @@
 			// });
 
 			$("input[name='tipo_v']").on("change", function() {
+				$(".overlay").addClass("show")
 				tipo = $("input[name=tipo_v]:checked").val();
 				ref = $("#reference").val() // $("#reference option:selected").val();
 				
@@ -374,13 +407,18 @@
 					})
 					$("#brands").formSelect();
 					$(".brand-box").addClass("show")
+					
 					// console.log(instance)
 
+				}).then(()=>{
+					$(".overlay").removeClass("show")
 				})
 
 			});
 
 			$("#brands").on("change", function() {
+				$(".overlay").addClass("show")
+
 				brand = $("#brands option:selected").val();
 				tipo = $("input[name=tipo_v]:checked").val();
 				$(".selectedBrand").text(brand)
@@ -433,9 +471,13 @@
 						// console.log(item.Label)
 					})
 					$(".collection-box, .year-box").addClass("show")
+					
+				}).then(() => {
+					$(".overlay").removeClass("show")
 				})
 			});
 			$(".collection").on("click", ".collection-item", function() {
+				$(".overlay").addClass("show")
 				ref = $("#reference").val() // $("#reference option:selected").val();
 				tipo = $("input[name=tipo_v]:checked").val();
 				brand = $("#brands option:selected").val();
@@ -494,10 +536,12 @@
 								.removeClass("red").removeClass("darken-4")
 						})
 					}
-
+				}).then(() =>{
+					$(".overlay").removeClass("show")
 				})
 			})
 			$("#year").on("change", function() {
+				$(".overlay").addClass("show")
 				year = $("#year option:selected").val();
 				tipo = $("input[name=tipo_v]:checked").val();
 				const p1 = new Promise((resolve, reject) => {
@@ -538,6 +582,8 @@
 						// console.log(item.Label)
 					})
 					$(".collection-box").addClass("show")
+				}).then(()=>{
+					$(".overlay").removeClass("show")
 				})
 				// console.log(response)
 				// $.each(res, function(a,b) {
