@@ -175,7 +175,7 @@
 	<!-- CONTENT -->
 	<div class="overlay">
 	<img height="44" title="Logo" alt="" src="<?=base_url("assets/img/loading.gif")?>">
-		<h6>Agurade...</h6>
+		<h6>Aguarde...</h6>
 	</div>
 	<section>
 		<div class="container">
