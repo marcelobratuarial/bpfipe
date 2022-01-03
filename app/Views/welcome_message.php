@@ -242,8 +242,8 @@
 						<div class="row">
 							<div class="col s12">
 								<ul class="tabs">
-									<li class="tab col s3"><a class="active tipo-consulta" data-tipo="comum" href="#pesq-comum">Pesquisa comum</a></li>
-									<li class="tab col s3"><a class="tipo-consulta" data-tipo="cfipe" href="#pesq-cod-fipe">Por código FIPE</a></li>
+									<li class="tab col s6"><a class="active tipo-consulta" data-tipo="comum" href="#pesq-comum">Pesquisa comum</a></li>
+									<li class="tab col s6"><a class="tipo-consulta" data-tipo="cfipe" href="#pesq-cod-fipe">Por código FIPE</a></li>
 								</ul>
 							</div>
 							<div id="pesq-comum" class="col s12">
