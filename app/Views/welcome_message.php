@@ -13,26 +13,28 @@
 	<!-- STYLES -->
 
 	<style {csp-style-nonce}>
-		
 		.lp-side {
 			display: flex;
 			align-items: center;
 			height: 100vh;
 		}
+
 		.lp-form {
 			padding: 50px 10px;
 			/* height: 100vh; */
 			display: flex;
 			flex-direction: column;
 		}
+
 		.form-box {
 			padding: 50px 10px;
-/* 			
+			/* 			
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			align-content: center; */
 		}
+
 		.collection-item div span {
 			text-overflow: ellipsis;
 		}
@@ -43,9 +45,11 @@
 			transition: all 0.7s ease-in;
 			opacity: 1;
 		}
+
 		.collection {
-			overflow:unset !important;
+			overflow: unset !important;
 		}
+
 		.collection-box {
 			opacity: 0;
 			height: auto;
@@ -53,14 +57,22 @@
 			transition: all 0.7s ease-out;
 		}
 
-		.fullDetails.show, .year-box.show, .brand-box.show {
+		.fullDetails.show,
+		.cfipe-box.show,
+		.cfipe-year-box.show,
+		.year-box.show,
+		.brand-box.show {
 			max-width: 600px;
 			max-height: 600px;
 			transition: all 0.7s ease-in;
 			opacity: 1;
 		}
 
-		.fullDetails, .year-box, .brand-box {
+		.fullDetails,
+		.cfipe-box,
+		.cfipe-year-box,
+		.year-box,
+		.brand-box {
 			opacity: 0;
 			width: auto;
 			max-width: 0px;
@@ -75,25 +87,30 @@
 			width: 0;
 			height: 0;
 		}
+
 		.collection-item.active {
 			color: #fff !important;
 			background-color: #1a237e !important;
 		}
+
 		.collection-item {
 			cursor: pointer;
 			position: relative;
 			transition: background-color 1s;
 		}
+
 		.collection li.collection-item:hover {
 			color: #fff;
 			background-color: #1a237e;
 			transition: background-color 1s;
 		}
+
 		.collection li.collection-item.active::after {
 			right: 0px !important;
 			top: 10px !important;
 			color: #fff;
 		}
+
 		.collection li.collection-item::after {
 			color: #1a237e;
 			font-family: 'Material Icons';
@@ -103,11 +120,13 @@
 			top: 10px;
 			transition: right 0.6s ease-out, color 1s;
 		}
+
 		.collection li.collection-item:hover::after {
 			right: 0px;
 			color: #fff;
 			transition: right 0.2s ease-in-out, color 1s;
 		}
+
 		.overlay {
 			z-index: 9999999;
 			display: none;
@@ -118,6 +137,7 @@
 			max-height: 0px;
 			transition: all 0.2s ease-out;
 		}
+
 		.overlay.show {
 			display: block;
 			opacity: 1;
@@ -136,6 +156,9 @@
 			align-items: center;
 			justify-content: center;
 		}
+		.comum-box, .cod-fipe-box {
+			margin: 40px 0;
+		}
 	</style>
 </head>
 
@@ -143,7 +166,7 @@
 
 	<!-- HEADER: MENU + HEROE SECTION -->
 	<header>
-	<?php /*
+		<?php /*
 		<div class="menu">
 			<ul>
 				<li class="logo"><a href="https://codeigniter.com" target="_blank">
@@ -171,20 +194,20 @@
 	</div> */ ?>
 
 	</header>
-	
+
 	<!-- CONTENT -->
 	<div class="overlay">
-	<img height="44" title="Logo" alt="" src="<?=base_url("assets/img/loading.gif")?>">
+		<img height="44" title="Logo" alt="" src="<?= base_url("assets/img/loading.gif") ?>">
 		<h6>Aguarde...</h6>
 	</div>
 	<section>
 		<div class="container">
 			<div class="row">
 				<div class="lp-side col s3">
-				<img height="44" title="Logo" alt="" src="<?=base_url("assets/img/logo.png")?>">
+					<img height="44" title="Logo" alt="" src="<?= base_url("assets/img/logo.png") ?>">
 				</div>
 				<div class="lp-form col s9">
-					
+
 					<div class="form-box">
 						<div class="row center-align">
 							<?php /*
@@ -197,7 +220,7 @@
 								<label>Tabela de Referência: <span class="selectedReference"></span></label>
 							</div> */ ?>
 							<label>Tabela de Referência: <span class="selectedReference"><?= $datas['ConsultarTabelaDeReferencia'][0]->Mes ?></span></label>
-							<input type="hidden" name="reference"  value="<?= $datas['ConsultarTabelaDeReferencia'][0]->Codigo ?>" id="reference">
+							<input type="hidden" name="reference" value="<?= $datas['ConsultarTabelaDeReferencia'][0]->Codigo ?>" id="reference">
 						</div>
 						<div class="row center-align">
 							<div style="display: flex; flex-direction: row;justify-content: space-evenly;">
@@ -216,39 +239,75 @@
 							</div>
 							<span class="selectedTipo"></span>
 						</div>
-						<div class="row center-align">
-							<div class="brand-box input-field col s6">
-								<select name="" id="brands">
-									<option value="" class="defB">Selecione</option>
-
-									<?php
-									foreach ($datas['ConsultarMarcas'] as $marca) :
-									?>
-										<option value="<?= $marca->Value ?>"><?= $marca->Label ?></option>
-									<?php endforeach ?>
-								</select>
-								<label>Marca: <span class="selectedBrand"></span></label>
+						<div class="row">
+							<div class="col s12">
+								<ul class="tabs">
+									<li class="tab col s3"><a class="active tipo-consulta" data-tipo="comum" href="#pesq-comum">Pesquisa comum</a></li>
+									<li class="tab col s3"><a class="tipo-consulta" data-tipo="cfipe" href="#pesq-cod-fipe">Por código FIPE</a></li>
+								</ul>
 							</div>
-							<div class="year-box input-field col s6">
-								<select name="" id="year">
-									<option value="">Selecione</option>
+							<div id="pesq-comum" class="col s12">
+								<div class="row center-align comum-box">
+									
+									<div class="brand-box input-field col s6">
 
-									<?php
-									for ($a = 2021; $a >= 1950; $a--) :
-									?>
-										<option value="<?= $a ?>"><?= $a ?></option>
-									<?php endfor; ?>
-								</select>
-								<label>Ano</label>
+										<select name="" id="brands">
+											<option value="" class="defB">Selecione</option>
+
+											<?php
+											foreach ($datas['ConsultarMarcas'] as $marca) :
+											?>
+												<option value="<?= $marca->Value ?>"><?= $marca->Label ?></option>
+											<?php endforeach ?>
+										</select>
+										<label>Marca: <span class="selectedBrand"></span></label>
+									</div>
+									<div class="year-box input-field col s6">
+										<select name="" id="year">
+											<option value="">Selecione</option>
+
+											<?php
+											for ($a = 2021; $a >= 1950; $a--) :
+											?>
+												<option value="<?= $a ?>"><?= $a ?></option>
+											<?php endfor; ?>
+										</select>
+										<label>Ano</label>
+									</div>
+									<!-- <div class="combustivel-box input-field col s3">
+										<select name="" id="combustivel">
+											<option selected value="1">Gasolina</option>
+											<option value="2">Álcool</option>
+											<option value="3">Diesel</option>
+										</select>
+									</div> -->
+								</div>
 							</div>
-							<!-- <div class="combustivel-box input-field col s3">
-							<select name="" id="combustivel">
-								<option selected value="1">Gasolina</option>
-								<option value="2">Álcool</option>
-								<option value="3">Diesel</option>
-							</select>
-						</div> -->
+							<div id="pesq-cod-fipe" class="col s12">
+								<div class="row center-align cod-fipe-box">
+									
+									<div class="cfipe-box input-field col s6">
+										<input placeholder="Ex.: 010203-4" id="codigo_fipe" type="text" class="validate">
+										<label for="codigo_fipe">Código FIPE</label>
+									</div>
+									<div class="cfipe-year-box input-field col s6">
+										<select name="" id="cf-f-year">
+											<option value="">Selecione</option>
+
+										</select>
+										<label for="cf-f-year">Ano</label>
+									</div>
+									<!-- <div class="combustivel-box input-field col s3">
+										<select name="" id="combustivel">
+											<option selected value="1">Gasolina</option>
+											<option value="2">Álcool</option>
+											<option value="3">Diesel</option>
+										</select>
+									</div> -->
+								</div>
+							</div>
 						</div>
+
 
 
 
@@ -296,13 +355,13 @@
 							</div>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
-			
-			
-			
-			
+
+
+
+
 		</div>
 
 	</section>
@@ -360,8 +419,13 @@
 		var response;
 		$(document).ready(function() {
 			$('select').formSelect();
+			$('.tabs').tabs();
 
-
+			const tipos = []
+			tipos[1] = 'carro'
+			tipos[2] = 'moto'
+			tipos[3] = 'caminhao'
+			var cfipe;
 			var ref;
 			var tipo;
 			var brand;
@@ -373,14 +437,39 @@
 			// 	ref = $("#reference").val() //$("#reference option:selected").val();
 			// 	$(".selectedReference").text(ref)
 			// });
+			$(".tipo-consulta").on("click", function () {
+				$(".collection-box, .year-box, .brand-box, .fullDetails").removeClass("show")
+				if($(this).data("tipo") == 'comum') {
+					$(".brand-box").addClass("show")
+				} else {
+					$(".cfipe-box, .cfipe-year-box").addClass("show")
+				}
+				$("input[name='tipo_v']").trigger("change")
+				$("#brands option").not(':first').remove();
+				var instance = M.FormSelect.getInstance($("#brands"));
+					instance.destroy()
+				$("#brands").formSelect();
+				$(".collection .collection-item").remove()
+				$("#year option").not(':first').remove();
+				var instance = M.FormSelect.getInstance($("#year"));
+					instance.destroy()
+				$("#year").formSelect();
 
+
+				$("#cf-f-year option").not(':first').remove();
+				var instance = M.FormSelect.getInstance($("#cf-f-year"));
+					instance.destroy()
+				$("#cf-f-year").formSelect();
+
+				$("#codigo_fipe").val("")
+			})
 			$("input[name='tipo_v']").on("change", function() {
 				$(".overlay").addClass("show")
 				tipo = $("input[name=tipo_v]:checked").val();
 				ref = $("#reference").val() // $("#reference option:selected").val();
-				
+
 				$(".collection-box, .year-box, .brand-box, .fullDetails").removeClass("show")
-				
+
 
 				console.log(tipo)
 				// $(".selectedTipo").text(tipo)
@@ -407,10 +496,10 @@
 					})
 					$("#brands").formSelect();
 					$(".brand-box").addClass("show")
-					
+
 					// console.log(instance)
 
-				}).then(()=>{
+				}).then(() => {
 					$(".overlay").removeClass("show")
 				})
 
@@ -424,7 +513,7 @@
 				$(".selectedBrand").text(brand)
 				const p1 = new Promise((resolve, reject) => {
 					$(".collection-box, .year-box, .fullDetails").removeClass("show")
-				
+
 					resolve();
 				});
 				p1.then(() => {
@@ -471,7 +560,7 @@
 						// console.log(item.Label)
 					})
 					$(".collection-box, .year-box").addClass("show")
-					
+
 				}).then(() => {
 					$(".overlay").removeClass("show")
 				})
@@ -510,6 +599,258 @@
 					console.log("testeeeee", veh)
 					if (typeof veh.erro !== 'undefined') {
 						console.log("error")
+						var m = Y.length > 1 ? 'Nenhum resultado': 'Selecione o ano'
+						$(".fullDetails .card-title").text(m)
+						$(".fullDetails").addClass("error").addClass("show")
+							.removeClass("blue-grey").removeClass("darken-1")
+							.addClass("red").addClass("darken-4")
+						// $(".combustivel-box").removeClass("show")
+					} else {
+
+						const p1 = new Promise((resolve, reject) => {
+							$(".fullDetails .card-title").text(veh.Valor)
+							$(".fullDetails #Vmarca").text(veh.Marca)
+							$(".fullDetails #Vmodelo").text(veh.Modelo)
+							$(".fullDetails #Vano").text(veh.AnoModelo)
+							$(".fullDetails #Vfipe").text(veh.CodigoFipe)
+							$(".fullDetails #Vcombustivel").text(veh.Combustivel)
+							// $(".fullDetails .card-title").text(veh.Modelo)
+							resolve();
+						});
+						p1.then(() => {
+							// $(".collection .collection-item").remove()
+
+							$(".fullDetails").removeClass("error")
+								.addClass('show')
+								.addClass("blue-grey").addClass("darken-1")
+								.removeClass("red").removeClass("darken-4")
+						})
+					}
+				}).then(() => {
+					$(".overlay").removeClass("show")
+				})
+			})
+			$("#year").on("change", function() {
+				$(".overlay").addClass("show")
+				year = $("#year option:selected").val();
+				tipo = $("input[name=tipo_v]:checked").val();
+				const p1 = new Promise((resolve, reject) => {
+					$(".collection-box, .fullDetails").removeClass("show")
+
+					resolve();
+				});
+				p1.then(() => {
+					$(".collection .collection-item").remove()
+					// $(".combustivel-box").addClass("show")
+				})
+				// codigoTipoVeiculo: 1
+				// codigoTabelaReferencia: 281
+				// codigoModelo: 
+				// codigoMarca: 5
+				// ano: 1999-1
+				// codigoTipoCombustivel: 1
+				// anoModelo: 1999
+				// modeloCodigoExterno: 
+				// ref = $("#year option:selected").val();
+				console.log(year)
+				var [Y, C] = year.split("-")
+				data = {
+					act: "ConsultarModelosAtravesDoAno",
+					payload: {
+						codigoTipoVeiculo: tipo,
+						codigoTabelaReferencia: ref,
+						codigoModelo: null,
+						codigoMarca: brand,
+						ano: year,
+						codigoTipoCombustivel: C,
+						anoModelo: Y,
+						modeloCodigoExterno: null
+					}
+				}
+
+				// console.log(data)
+				find(data).then(function(veh) {
+					// console.log("ddssasdf", veh)
+
+					$.each(veh, (i, item) => {
+						var nItem = `<li data-idref="` + item.Value + `" class="collection-item">
+						<div><span>` + item.Label + `</span>
+							
+						</div>
+					</li>`
+						$(".collection").append(nItem)
+
+						// console.log(item.Label)
+					})
+					$(".collection-box").addClass("show")
+				}).then(() => {
+					$(".overlay").removeClass("show")
+				})
+				// console.log(response)
+				// $.each(res, function(a,b) {
+				// 	console.log(b)
+				// })
+				// $(".selectedBrand").text(ref)
+
+			});
+			$("#cf-f-year").on("change", function() {
+				
+				
+				
+				$(".overlay").addClass("show")
+				ref = $("#reference").val() // $("#reference option:selected").val();
+				tipo = $("input[name=tipo_v]:checked").val();
+				brand = $("#brands option:selected").val();
+				year = $("#cf-f-year option:selected").val();
+				cfipe = $("#codigo_fipe").val();
+				// combustivel = $("#combustivel option:selected").val();
+				modelId = $(this).data("idref")
+				$("li.collection-item").removeClass("active")
+				$(this).addClass("active");
+				// console.log(combustivel)
+				$(".fullDetails").removeClass("show")
+				console.log(year)
+				var [Y, C] = year.split("-")
+				console.log(Y)
+				console.log(C)
+				// codigoTabelaReferencia: 281
+				// codigoMarca: 
+				// codigoModelo: 
+				// codigoTipoVeiculo: 1
+				// anoModelo: 2022
+				// codigoTipoCombustivel: 3
+				// tipoVeiculo: carro
+				// modeloCodigoExterno: 060007-5
+				// tipoConsulta: codigo
+
+				data = {
+					act: "ConsultarValorComTodosParametros",
+					payload: {
+						"codigoTabelaReferencia": ref,
+						"codigoMarca": null,
+						"codigoModelo": null,
+						"codigoTipoVeiculo": tipo,
+						"anoModelo": Y,
+						"codigoTipoCombustivel": C,
+						"tipoVeiculo": tipos[tipo],
+						"modeloCodigoExterno": cfipe,
+						"tipoConsulta": "codigo"
+					}
+				}
+
+				console.log(data)
+				find(data).then(function(veh) {
+					console.log("ddssasdf", veh)
+					$(".collection .collection-item").remove()
+					// $.each(veh, (i, item) => {
+					var nItem = `<li data-idref="` + veh.CodigoFipe + `" class="active collection-item">
+						<div><span>` + veh.Modelo + `</span>
+							
+						</div>
+					</li>`
+					$(".collection").append(nItem)
+
+						// console.log(item.Label)
+					// })
+					$(".collection-box").addClass("show")
+
+					$(".fullDetails .card-title").text(veh.Valor)
+					$(".fullDetails #Vmarca").text(veh.Marca)
+					$(".fullDetails #Vmodelo").text(veh.Modelo)
+					$(".fullDetails #Vano").text(veh.AnoModelo)
+					$(".fullDetails #Vfipe").text(veh.CodigoFipe)
+					$(".fullDetails #Vcombustivel").text(veh.Combustivel)
+					
+					if(typeof veh.erro === 'undefined') {
+						$(".fullDetails").removeClass("error")
+						.addClass('show')
+						.addClass("blue-grey").addClass("darken-1")
+						.removeClass("red").removeClass("darken-4")
+					} else {
+						$(".fullDetails").addClass("error")
+						.removeClass('show')
+						.removeClass("blue-grey").removeClass("darken-1")
+						.addClass("red").addClass("darken-4")
+					}
+					
+					
+
+				}).then(() => {
+					
+					// $(".fullDetails .card-title").text(veh.Modelo)
+					
+					// $(".collection .collection-item").remove()
+					
+					$(".overlay").removeClass("show")
+				})
+				// console.log(response)
+				// $.each(res, function(a,b) {
+				// 	console.log(b)
+				// })
+				// $(".selectedBrand").text(ref)
+
+			});
+
+			$("#pesq-cod-fipe").on("keyup", "#codigo_fipe", function(e) {
+				e.preventDefault()
+				var codFipe = $(this).val();
+                console.log(codFipe)
+                if(codFipe.length < 8) {
+                    return false
+                }
+				// codigoTabelaReferencia: 281
+				// codigoTipoVeiculo: 1
+				// codigoMarca: 
+				// codigoModelo: 
+				// ano: 
+				// codigoTipoCombustivel: 
+				// anoModelo: 
+				// modeloCodigoExterno: 018004-1
+                data = {
+					act: "ConsultarAnoModeloPeloCodigoFipe",
+					payload: {
+						"codigoTabelaReferencia": ref,
+						"codigoTipoVeiculo": tipo,
+						"codigoMarca": null,
+						"codigoModelo": null,
+						"ano": null,
+						"codigoTipoCombustivel": null,
+						"anoModelo": null,
+						"modeloCodigoExterno": codFipe
+					}
+				}
+				find(data).then(function(veh) {
+					console.log("testeeeee", veh)
+
+					$("#cf-f-year option").not(':first').remove();
+
+
+					var instance = M.FormSelect.getInstance($("#cf-f-year"));
+					instance.destroy()
+					$.each(veh, function(i, item) {
+
+						$("#cf-f-year").append($('<option>', {
+							value: item.Value,
+							text: item.Label
+						}))
+					})
+					$("#cf-f-year").formSelect();
+
+
+
+					// $.each(veh.Modelos, (i, item) => {
+					// 	var nItem = `<li data-idref="` + item.Value + `" class="collection-item">
+					// 	<div><span>` + item.Label + `</span>
+					// 	</div>
+					// </li>`
+					// 	$(".collection").append(nItem)
+
+					// 	// console.log(item.Label)
+					// })
+
+
+					if (typeof veh.erro !== 'undefined') {
+						console.log("error")
 						$(".fullDetails .card-title").text("Nenhum resultado")
 						$(".fullDetails").addClass("error").addClass("show")
 							.removeClass("blue-grey").removeClass("darken-1")
@@ -536,62 +877,10 @@
 								.removeClass("red").removeClass("darken-4")
 						})
 					}
-				}).then(() =>{
+				}).then(() => {
 					$(".overlay").removeClass("show")
 				})
 			})
-			$("#year").on("change", function() {
-				$(".overlay").addClass("show")
-				year = $("#year option:selected").val();
-				tipo = $("input[name=tipo_v]:checked").val();
-				const p1 = new Promise((resolve, reject) => {
-					$(".collection-box, .fullDetails").removeClass("show")
-				
-					resolve();
-				});
-				p1.then(() => {
-					$(".collection .collection-item").remove()
-					// $(".combustivel-box").addClass("show")
-				})
-
-				// ref = $("#year option:selected").val();
-				console.log(year)
-				var [Y, C] = year.split("-")
-				data = {
-					act: "ConsultarModelosAtravesDoAno",
-					payload: {
-						codigoTabelaReferencia: ref,
-						codigoTipoVeiculo: tipo,
-						codigoMarca: brand,
-						anoModelo: Y
-					}
-				}
-
-				// console.log(data)
-				find(data).then(function(veh) {
-					// console.log("ddssasdf", veh)
-
-					$.each(veh, (i, item) => {
-						var nItem = `<li data-idref="` + item.Value + `" class="collection-item">
-						<div><span>` + item.Label + `</span>
-							
-						</div>
-					</li>`
-						$(".collection").append(nItem)
-
-						// console.log(item.Label)
-					})
-					$(".collection-box").addClass("show")
-				}).then(()=>{
-					$(".overlay").removeClass("show")
-				})
-				// console.log(response)
-				// $.each(res, function(a,b) {
-				// 	console.log(b)
-				// })
-				// $(".selectedBrand").text(ref)
-
-			});
 		});
 		// async function elHideReset(els) {
 		// 	$(".collection-box").removeClass("show")
@@ -637,8 +926,6 @@
 			console.warn(response)
 
 		}
-
-		
 	</script>
 	<script>
 		var base_url = '<?= base_url('/') ?>';
